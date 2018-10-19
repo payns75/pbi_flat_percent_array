@@ -1,0 +1,224 @@
+{
+    "objectifs": [
+        {
+            "id": 0,
+            "Category": "FONDS DE COMMERCE",
+            "libelle": "Clients actifs Particuliers",
+            "text": 96,
+            "arc": 96,
+            "vor": 10,
+            "point_value": 334.25,
+            "point_total": 350,
+            "url": ""
+        },
+        {
+            "id": 1,
+            "Category": "FONDS DE COMMERCE",
+            "libelle": "Clients actifs Professionnels / Entreprises",
+            "text": 24,
+            "arc": 24,
+            "vor": 1,
+            "point_value": 0,
+            "point_total": 350,
+            "url": ""
+        },
+        {
+            "id": 2,
+            "Category": "FONDS DE COMMERCE",
+            "libelle": "Conquête active Particuliers",
+            "text": 101,
+            "arc": 101,
+            "vor": 100,
+            "point_value": 252.72,
+            "point_total": 250,
+            "url": ""
+        },
+        {
+            "id": 3,
+            "Category": "FONDS DE COMMERCE",
+            "libelle": "Conquête active Professionnels / Entreprises",
+            "text": 84,
+            "arc": 84,
+            "vor": 10,
+            "point_value": 210.75,
+            "point_total": 250,
+            "url": ""
+        },
+        {
+            "id": 4,
+            "Category": "FONDS DE COMMERCE",
+            "libelle": "Clients actifs équipés Particuliers",
+            "text": 95,
+            "arc": 95,
+            "vor": 10,
+            "point_value": 142.28,
+            "point_total": 150,
+            "url": ""
+        },
+        {
+            "id": 5,
+            "Category": "FONDS DE COMMERCE",
+            "libelle": "Client actifs équipés et assurés Particuliers",
+            "text": 66,
+            "arc": 66,
+            "vor": 1,
+            "point_value": 99.63,
+            "point_total": 100,
+            "url": ""
+        },
+        {
+            "id": 6,
+            "Category": "FONDS DE COMMERCE",
+            "libelle": "Client actifs équipés Professionnels / Entreprises",
+            "text": 38,
+            "arc": 38,
+            "vor": 1,
+            "point_value": 0,
+            "point_total": 150,
+            "url": ""
+        },
+        {
+            "id": 7,
+            "Category": "FONDS DE COMMERCE",
+            "libelle": "Client actifs équipés double relation active",
+            "text": 49,
+            "arc": 49,
+            "vor": 1,
+            "point_value": 0,
+            "point_total": 150,
+            "url": ""
+        },
+        {
+            "id": 8,
+            "Category": "EQUIPEMENT",
+            "libelle": "Assurance vie (Taux UC min 25%)",
+            "text": 53,
+            "arc": 78,
+            "vor": 1,
+            "point_value": 238.5,
+            "point_total": 300,
+            "url": ""
+        },
+        {
+            "id": 9,
+            "Category": "EQUIPEMENT",
+            "libelle": "Prévoyance conseil IARD",
+            "text": 50,
+            "arc": 75,
+            "vor": 1,
+            "point_value": 299.16,
+            "point_total": 400,
+            "url": ""
+        },
+        {
+            "id": 10,
+            "Category": "EQUIPEMENT",
+            "libelle": "Ventes nettes",
+            "text": 29,
+            "arc": 45,
+            "vor": 1,
+            "point_value": 0,
+            "point_total": 100,
+            "url": ""
+        },
+        {
+            "id": 11,
+            "Category": "PRODUCTION",
+            "libelle": "Crédits consommation",
+            "text": 58,
+            "arc": 82,
+            "vor": 10,
+            "point_value": 260.37,
+            "point_total": 300,
+            "url": ""
+        },
+        {
+            "id": 12,
+            "Category": "PRODUCTION",
+            "libelle": "Crédits immobiliers",
+            "text": 64,
+            "arc": 95,
+            "vor": 10,
+            "point_value": 191.6,
+            "point_total": 200,
+            "url": ""
+        },
+        {
+            "id": 13,
+            "Category": "PRODUCTION",
+            "libelle": "Crédits équipement et CBM",
+            "text": 55,
+            "arc": 80,
+            "vor": 10,
+            "point_value": 165,
+            "point_total": 200,
+            "url": ""
+        },
+        {
+            "id": 14,
+            "Category": "PREFERENCE CLIENT",
+            "libelle": "Préférence Client",
+            "text": 96,
+            "arc": 98,
+            "vor": 1,
+            "point_value": 1244.36,
+            "point_total": 1300,
+            "url": ""
+        },
+        {
+            "id": 15,
+            "Category": "PREFERENCE CLIENT",
+            "libelle": "Indicateurs d'activité",
+            "text": 60,
+            "arc": 60,
+            "vor": 1,
+            "point_value": 0,
+            "point_total": 200,
+            "url": ""
+        },
+        {
+            "id": 16,
+            "Category": "RENTABILITE",
+            "libelle": "PNB Commissions",
+            "text": 108,
+            "arc": 108,
+            "vor": 100,
+            "point_value": 1293.12,
+            "point_total": 1200,
+            "url": ""
+        },
+        {
+            "id": 17,
+            "Category": "INCONTOURNABLES",
+            "libelle": "DRC",
+            "text": 0,
+            "arc": 0,
+            "vor": 100,
+            "point_value": 0,
+            "point_total": null,
+            "url": ""
+        },
+        {
+            "id": 18,
+            "Category": "INCONTOURNABLES",
+            "libelle": "DAL",
+            "text": -2,
+            "arc": 0,
+            "vor": 1,
+            "point_value": -94.63,
+            "point_total": null,
+            "url": ""
+        },
+        {
+            "id": 19,
+            "Category": "INCONTOURNABLES",
+            "libelle": "Héraclès",
+            "text": 0,
+            "arc": 0,
+            "vor": 100,
+            "point_value": 0,
+            "point_total": null,
+            "url": ""
+        }
+    ]
+}

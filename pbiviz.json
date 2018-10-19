@@ -5,20 +5,22 @@
     "guid": "pbiflatpercentarrayAFF2CC10B0F540C399FF2951A35EC644",
     "visualClassName": "Visual",
     "version": "1.0.0",
-    "description": "",
-    "supportUrl": "",
-    "gitHubUrl": ""
+    "description": "flat percent array control",
+    "supportUrl": "https://github.com/payns75/pbi_flat_percent_array",
+    "gitHubUrl": "https://github.com/payns75/pbi_flat_percent_array"
   },
   "apiVersion": "1.11.0",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Rémy Jacquemin",
+    "email": "rjacquemin75@gmail.com"
   },
   "assets": {
     "icon": "assets/icon.png"
   },
   "externalJS": [
-    "node_modules/powerbi-visuals-utils-dataviewutils/lib/index.js"
+    "node_modules/powerbi-visuals-utils-dataviewutils/lib/index.js",
+    "node_modules/d3/build/d3.min.js",
+    "d3Injector.js"
   ],
   "style": "style/visual.less",
   "capabilities": "capabilities.json",
