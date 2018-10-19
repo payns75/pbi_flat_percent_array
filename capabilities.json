@@ -1,14 +1,100 @@
 {
     "dataRoles": [
         {
-            "displayName": "Category Data",
-            "name": "category",
-            "kind": "Grouping"
+            "displayName": "Value Text",
+            "name": "value_text",
+            "kind": "Measure"
         },
         {
-            "displayName": "Measure Data",
-            "name": "measure",
+            "displayName": "Value Arc",
+            "name": "value_arc",
             "kind": "Measure"
+        },
+        {
+            "displayName": "VOR Flag",
+            "name": "vor_flag",
+            "kind": "Measure"
+        },
+        {
+            "displayName": "Point Value",
+            "name": "point_value",
+            "kind": "Measure"
+        },
+        {
+            "displayName": "Point Total",
+            "name": "point_total",
+            "kind": "Measure"
+        },
+        {
+            "displayName": "Catégory",
+            "name": "category",
+            "kind": "Grouping",
+            "requiredTypes": [
+                {
+                    "text": true
+                }
+            ]
+        }
+    ],
+    "dataViewMappings": [
+        {
+            "conditions": [
+                {
+                    "value_text": {
+                        "min": 1,
+                        "max": 1
+                    },
+                    "value_arc": {
+                        "max": 1
+                    },
+                    "vor_flag": {
+                        "max": 1
+                    },
+                    "point_value": {
+                        "max": 1
+                    },
+                    "point_total": {
+                        "max": 1
+                    },
+                    "category": {
+                        "max": 2
+                    }
+                }
+            ],
+            "categorical": {
+                "values": {
+                    "select": [
+                        {
+                            "bind": {
+                                "to": "value_text"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "value_arc"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "vor_flag"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "point_value"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "point_total"
+                            }
+                        }
+                    ]
+                },
+                "categories": {
+                    "for": { "in": "category" }
+                }
+            }
         }
     ],
     "objects": {
@@ -58,27 +144,5 @@
             }
         }
     },
-    "dataViewMappings": [
-        {
-            "categorical": {
-                "categories": {
-                    "for": {
-                        "in": "category"
-                    },
-                    "dataReductionAlgorithm": {
-                        "top": {}
-                    }
-                },
-                "values": {
-                    "select": [
-                        {
-                            "bind": {
-                                "to": "measure"
-                            }
-                        }
-                    ]
-                }
-            }
-        }
-    ]
+    "suppressDefaultTitle": true
 }
