@@ -20,6 +20,7 @@
   "externalJS": [
     "node_modules/powerbi-visuals-utils-dataviewutils/lib/index.js",
     "node_modules/d3/build/d3.min.js",
+    "node_modules/shufflejs/dist/shuffle.min.js",
     "d3Injector.js"
   ],
   "style": "style/visual.less",

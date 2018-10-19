@@ -7,5 +7,6 @@ TODO
 - N'ajouter que les modules utiles.
 
 ## Visual
+- Paramètrer le zoom.
 
 ## Questions

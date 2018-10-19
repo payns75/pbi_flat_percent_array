@@ -1,8 +1,10 @@
+var Shuffle: any;
 module powerbi.extensibility.visual {
     "use strict";
     export class Visual implements IVisual {
         private settings: VisualSettings;
         private container: HTMLElement;
+        private shuffleInstance: any;
 
         constructor(options: VisualConstructorOptions) {
             const target = options.element;
@@ -46,6 +48,11 @@ module powerbi.extensibility.visual {
             };
 
             var categories = groupBy(data, "category");
+
+            if (this.shuffleInstance) {
+                this.shuffleInstance.destroy();
+            }
+
             this.container.innerHTML = "";
 
             for (let i = 0, len = Object.keys(categories).length; i < len; i++) {
@@ -81,11 +88,16 @@ module powerbi.extensibility.visual {
                     libelle_text.innerText = item.subcategory;
                     const point_text: HTMLElement = document.createElement("div");
                     point_text.className = "point_text";
-                    point_text.innerText = `${item.point_value} / ${item.point_total} points`;
+                    const pt = item.point_total ? ` / ${item.point_total}` : "";
+                    point_text.innerText = `${item.point_value}${pt} points`;
                     content_text.appendChild(libelle_text);
                     content_text.appendChild(point_text);
                 }
             }
+            this.shuffleInstance = new Shuffle(this.container, {
+                itemSelector: '.category_container',
+                sizer: '.category_container'
+            });
         }
 
         public static pie(parent: HTMLElement, value: number, arc_value: number, vor: number) {

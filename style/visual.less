@@ -1,8 +1,11 @@
 .container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: baseline;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // align-items: baseline;
+    zoom:0.7;
+    // height: 800px;
+    // overflow: auto;
 }
 
 .category_container{
@@ -26,10 +29,15 @@
 }
 
 .category_item{
+    cursor: pointer;
     display: flex;
     align-items: center;
     padding: 16px;
     height: 90px;
+}
+
+.category_item:hover{
+    background-color: #e0e0e0!important;
 }
 
 .category_item_odd{
@@ -44,11 +52,6 @@
 .left_chart{
     height: 90px;
     width: 90px;
-    // background-color: lightpink;
-    // border-radius: 40px;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
 }
 
 .content_text{
