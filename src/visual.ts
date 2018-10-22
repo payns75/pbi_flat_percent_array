@@ -4,13 +4,14 @@ module powerbi.extensibility.visual {
     export class Visual implements IVisual {
         private settings: VisualSettings;
         private container: HTMLElement;
+        private target: HTMLElement;
         private shuffleInstance: any;
 
         constructor(options: VisualConstructorOptions) {
-            const target = options.element;
+            this.target = options.element;
             this.container = document.createElement("div");
             this.container.className = "container";
-            target.appendChild(this.container);
+            this.target.appendChild(this.container);
         }
 
         public update(options: VisualUpdateOptions) {
@@ -24,11 +25,16 @@ module powerbi.extensibility.visual {
             let vor_flag = Visual.getvalues(categorical, "vor_flag");
             let point_value = Visual.getvalues(categorical, "point_value");
             let point_total = Visual.getvalues(categorical, "point_total");
+            let category_sort = Visual.getvalues(categorical, "category_sort");
             const data = [];
+
+            this.target.style.overflow = this.settings.display.overflow ? "auto" : "hidden";
+            this.target.style.zoom = this.settings.display.zoom;
 
             for (let i = 0, len = category.values.length; i < len; i++) {
                 data.push({
                     category: category.values[i],
+                    category_sort: category_sort[i],
                     subcategory: subcategory.values[i],
                     value_text: value_text[i],
                     value_arc: value_arc[i],
@@ -67,8 +73,14 @@ module powerbi.extensibility.visual {
                 category_content.className = "category_content";
                 category_container.appendChild(category_content);
                 this.container.appendChild(category_container);
+                const len2 = categories[cat].length;
 
-                for (let j = 0, len2 = categories[cat].length; j < len2; j++) {
+                if (len2 > 0) {
+                    var position = categories[cat][0].category_sort;
+                    category_container.setAttribute("position", position);
+                }
+
+                for (let j = 0; j < len2; j++) {
                     const item = categories[cat][j];
 
                     const category_item: HTMLElement = document.createElement("div");
@@ -98,6 +110,10 @@ module powerbi.extensibility.visual {
                 itemSelector: '.category_container',
                 sizer: '.category_container'
             });
+
+            this.shuffleInstance.sort({ 
+                by: element => element.getAttribute('position')
+             });
         }
 
         public static pie(parent: HTMLElement, value: number, arc_value: number, vor: number) {

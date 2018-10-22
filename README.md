@@ -8,5 +8,8 @@ TODO
 
 ## Visual
 - Paramètrer le zoom.
+- Mettre en place le lien.
+- Ajouter un overflow
+- Si donnée(s) vides, afficher quand même le visuel.
 
 ## Questions
