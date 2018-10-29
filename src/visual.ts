@@ -1,11 +1,9 @@
-var Shuffle: any;
 module powerbi.extensibility.visual {
     "use strict";
     export class Visual implements IVisual {
         private settings: VisualSettings;
         private container: HTMLElement;
         private target: HTMLElement;
-        private shuffleInstance: any;
 
         constructor(options: VisualConstructorOptions) {
             this.target = options.element;
@@ -17,9 +15,16 @@ module powerbi.extensibility.visual {
         public update(options: VisualUpdateOptions) {
             this.settings = Visual.parseSettings(options && options.dataViews && options.dataViews[0]);
 
+            const gheight = options.viewport.height / (+this.settings.display.zoom);
+            this.container.style.height = gheight.toString() + "px";
+
+            const gwidth = options.viewport.width / (+this.settings.display.zoom);
+            this.container.style.width = gwidth.toString() + "px";
+
             let categorical = options.dataViews[0].categorical;
             let category = categorical.categories[0];
             let subcategory = categorical.categories[1];
+            const multiplicateur = this.settings.display.percent ? 100 : 1;
             let value_text = Visual.getvalues(categorical, "value_text");
             let value_arc = Visual.getvalues(categorical, "value_arc");
             let vor_flag = Visual.getvalues(categorical, "vor_flag");
@@ -29,22 +34,42 @@ module powerbi.extensibility.visual {
             const data = [];
 
             this.target.style.overflow = this.settings.display.overflow ? "auto" : "hidden";
-            this.target.style.zoom = this.settings.display.zoom;
+            this.container.style.zoom = this.settings.display.zoom;
+            this.container.style.justifyContent = this.settings.display.justify_content;
+            this.container.style.alignContent = this.settings.display.align_content;
+
+            const getvalue = (arr, index) => {
+                if (arr && arr.length > index) {
+                    return arr[index];
+                }
+            };
 
             for (let i = 0, len = category.values.length; i < len; i++) {
+
+                let cv_arc = getvalue(value_arc, i);
+                let cv_text = getvalue(value_text, i);
+
+                if (cv_text) {
+                    cv_text = `${Math.round(+cv_text * multiplicateur)}%`
+                }
+
+                if (cv_arc) {
+                    cv_arc = `${Math.round(+cv_arc * multiplicateur)}`
+                }
+
                 data.push({
                     category: category.values[i],
-                    category_sort: category_sort[i],
                     subcategory: subcategory.values[i],
-                    value_text: value_text[i],
-                    value_arc: value_arc[i],
-                    vor_flag: vor_flag[i],
-                    point_value: point_value[i],
-                    point_total: point_total[i]
+                    category_sort: getvalue(category_sort, i),
+                    value_text: cv_text,
+                    value_arc: cv_arc,
+                    vor_flag: getvalue(vor_flag, i),
+                    point_value: getvalue(point_value, i),
+                    point_total: getvalue(point_total, i)
                 });
             }
 
-            const groupBy = function (array, prop) {
+            const groupBy = (array, prop) => {
                 return array.reduce(function (groups, item) {
                     const val = item[prop]
                     groups[val] = groups[val] || []
@@ -54,17 +79,13 @@ module powerbi.extensibility.visual {
             };
 
             var categories = groupBy(data, "category");
-
-            if (this.shuffleInstance) {
-                this.shuffleInstance.destroy();
-            }
-
             this.container.innerHTML = "";
 
             for (let i = 0, len = Object.keys(categories).length; i < len; i++) {
                 const cat = Object.keys(categories)[i];
                 const category_container: HTMLElement = document.createElement("div");
                 category_container.className = "category_container";
+                category_container.style.margin = `${this.settings.display.category_margin}px`;
                 const category_title: HTMLElement = document.createElement("div");
                 category_title.className = "category_title";
                 category_title.textContent = cat;
@@ -73,11 +94,11 @@ module powerbi.extensibility.visual {
                 category_content.className = "category_content";
                 category_container.appendChild(category_content);
                 this.container.appendChild(category_container);
+
                 const len2 = categories[cat].length;
 
                 if (len2 > 0) {
-                    var position = categories[cat][0].category_sort;
-                    category_container.setAttribute("position", position);
+                    category_container.style.order = categories[cat][0].category_sort;
                 }
 
                 for (let j = 0; j < len2; j++) {
@@ -98,22 +119,16 @@ module powerbi.extensibility.visual {
                     const libelle_text: HTMLElement = document.createElement("div");
                     libelle_text.className = "libelle_text";
                     libelle_text.innerText = item.subcategory;
+
                     const point_text: HTMLElement = document.createElement("div");
                     point_text.className = "point_text";
-                    const pt = item.point_total ? ` / ${item.point_total}` : "";
-                    point_text.innerText = `${item.point_value}${pt} points`;
+                    const pt_total = item.point_total ? ` / ${item.point_total}` : "";
+                    const pt_value = point_value ? item.point_value : "";
+                    point_text.innerText = `${pt_value}${pt_total} points`;
                     content_text.appendChild(libelle_text);
                     content_text.appendChild(point_text);
                 }
             }
-            this.shuffleInstance = new Shuffle(this.container, {
-                itemSelector: '.category_container',
-                sizer: '.category_container'
-            });
-
-            this.shuffleInstance.sort({ 
-                by: element => element.getAttribute('position')
-             });
         }
 
         public static pie(parent: HTMLElement, value: number, arc_value: number, vor: number) {
@@ -161,7 +176,7 @@ module powerbi.extensibility.visual {
                 .style("font-weight", "500")
                 .style('font-size', `${20}px`)
                 .attr("dy", 8)
-                .text(d => d + "%");
+                .text(d => d);
         }
 
         public static getvalues(categorical: DataViewCategorical, name: string): any {

@@ -22,7 +22,6 @@
     "node_modules/d3-selection/dist/d3-selection.min.js",
     "node_modules/d3-shape/build/d3-shape.min.js",
     "node_modules/d3-path/build/d3-path.min.js",
-    "node_modules/shufflejs/dist/shuffle.min.js",
     "d3Injector.js"
   ],
   "style": "style/visual.less",

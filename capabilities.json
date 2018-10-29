@@ -114,6 +114,12 @@
         "display": {
             "displayName": "Display",
             "properties": {
+                "percent": {
+                    "displayName": "Pourcentage",
+                    "type": {
+                        "bool": true
+                    }
+                },
                 "zoom": {
                     "displayName": "Zoom",
                     "type": {
@@ -124,6 +130,76 @@
                     "displayName": "Overflow",
                     "type": {
                         "bool": true
+                    }
+                },
+                "category_margin": {
+                    "displayName": "Margin",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "justify_content": {
+                    "displayName": "Justify Content",
+                    "type": {
+                        "enumeration": [
+                            {
+                                "displayName": "flex-start",
+                                "description": "flex-start",
+                                "value": "flex-start"
+                            },
+                            {
+                                "displayName": "center",
+                                "description": "center",
+                                "value": "center"
+                            },
+                            {
+                                "displayName": "flex-end",
+                                "description": "flex-end",
+                                "value": "flex-end"
+                            },
+                            {
+                                "displayName": "space-between",
+                                "description": "space-between",
+                                "value": "space-between"
+                            },
+                            {
+                                "displayName": "space-around",
+                                "description": "space-around",
+                                "value": "space-around"
+                            }
+                        ]
+                    }
+                },
+                "align_content": {
+                    "displayName": "Align Content",
+                    "type": {
+                        "enumeration": [
+                            {
+                                "displayName": "flex-start",
+                                "description": "flex-start",
+                                "value": "flex-start"
+                            },
+                            {
+                                "displayName": "center",
+                                "description": "center",
+                                "value": "center"
+                            },
+                            {
+                                "displayName": "flex-end",
+                                "description": "flex-end",
+                                "value": "flex-end"
+                            },
+                            {
+                                "displayName": "space-between",
+                                "description": "space-between",
+                                "value": "space-between"
+                            },
+                            {
+                                "displayName": "space-around",
+                                "description": "space-around",
+                                "value": "space-around"
+                            }
+                        ]
                     }
                 }
             }

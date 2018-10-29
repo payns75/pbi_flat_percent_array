@@ -7,7 +7,11 @@ module powerbi.extensibility.visual {
       }
 
     export class displaySettings {
+      public percent: boolean = false;
       public zoom: string = "0.7";
       public overflow: boolean = false;
+      public category_margin: number = 4;
+      public justify_content: string = "space-between";
+      public align_content: string = "center";
      }
 }
