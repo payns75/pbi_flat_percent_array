@@ -4,12 +4,16 @@ module powerbi.extensibility.visual {
         private settings: VisualSettings;
         private container: HTMLElement;
         private target: HTMLElement;
+        private host: IVisualHost;
+        private selectionManager: ISelectionManager;
 
         constructor(options: VisualConstructorOptions) {
+            this.host = options.host;
             this.target = options.element;
             this.container = document.createElement("div");
             this.container.className = "container";
             this.target.appendChild(this.container);
+            this.selectionManager = this.host.createSelectionManager();
         }
 
         public update(options: VisualUpdateOptions) {
@@ -32,6 +36,7 @@ module powerbi.extensibility.visual {
             let point_total = Visual.getvalues(categorical, "point_total");
             let category_sort = Visual.getvalues(categorical, "category_sort");
             const data = [];
+            const _this = this;
 
             this.target.style.overflow = this.settings.display.overflow ? "auto" : "hidden";
             this.container.style.zoom = this.settings.display.zoom;
@@ -65,7 +70,10 @@ module powerbi.extensibility.visual {
                     value_arc: cv_arc,
                     vor_flag: getvalue(vor_flag, i),
                     point_value: getvalue(point_value, i),
-                    point_total: getvalue(point_total, i)
+                    point_total: getvalue(point_total, i),
+                    identity: this.host.createSelectionIdBuilder()
+                        .withCategory(subcategory, i)
+                        .createSelectionId(),
                 });
             }
 
@@ -79,6 +87,35 @@ module powerbi.extensibility.visual {
             };
 
             var categories = groupBy(data, "category");
+
+            const selectclass = (el: HTMLElement, name: string, remove = false) => {
+                if (el) {
+                    if (remove && el.classList.contains("category_item_selected")) {
+                        el.classList.remove("category_item_selected");
+                    }
+                    if (!remove && !el.classList.contains("category_item_selected")) {
+                        el.classList.add("category_item_selected");
+                    }
+                }
+            }
+
+            const selectItems = (ids: any[]) => {
+                for (let i = 0, len = Object.keys(categories).length; i < len; i++) {
+                    const cat = Object.keys(categories)[i];
+                    const len2 = categories[cat].length;
+
+                    for (let j = 0; j < len2; j++) {
+                        const item = categories[cat][j];
+
+                        if (ids.indexOf(item.identity) >= 0) {
+                            selectclass(item.category_item, "category_item_selected");
+                        } else {
+                            selectclass(item.category_item, "category_item_selected", true);
+                        }
+                    }
+                }
+            };
+
             this.container.innerHTML = "";
 
             for (let i = 0, len = Object.keys(categories).length; i < len; i++) {
@@ -105,6 +142,15 @@ module powerbi.extensibility.visual {
                     const item = categories[cat][j];
 
                     const category_item: HTMLElement = document.createElement("div");
+                    item["category_item"] = category_item;
+
+                    category_item.onclick = function (ev) {
+                        _this.selectionManager.select(item.identity, true)
+                            .then(function (ids: any[]) {
+                                selectItems(ids);
+                            });
+                    }
+
                     category_item.className = "category_item " + (j % 2 === 0 ? "category_item_even" : "category_item_odd");
 
                     const left_chart: HTMLElement = document.createElement("div");
@@ -132,12 +178,15 @@ module powerbi.extensibility.visual {
         }
 
         public static pie(parent: HTMLElement, value: number, arc_value: number, vor: number) {
-            const svg = d3.select(parent).append("svg");
-            const gcontainer = svg.append('g').classed('percenter', true);
             const radius = 45, arc_width = 8;
+            const svg = d3.select(parent).append("svg");
+            const gcontainer = svg.append('g');
+
             const color1 = ["#003A84", "#00B0E8"];
             const color2 = ["#30629D", "#3DC0ED"];
             gcontainer.attr("transform", `translate(${radius}, ${radius})`);
+
+
             const pie = d3.pie().sort(null).value(d => <any>d);
             var arc1 = d3.arc().outerRadius(radius).innerRadius(radius - arc_width);
             var arc2 = d3.arc().outerRadius(radius - arc_width + 1).innerRadius(radius - arc_width * 2);
