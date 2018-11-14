@@ -229,7 +229,7 @@
             "libelle": "DRC",
             "text": 0,
             "arc": 0,
-            "vor": 100,
+            "vor": null,
             "point_value": 0,
             "point_total": null,
             "url": ""

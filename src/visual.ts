@@ -37,7 +37,7 @@ module powerbi.extensibility.visual {
             let category_sort = Visual.getvalues(categorical, "category_sort");
             let url = Visual.getvalues(categorical, "url");
             const data = [];
-            const _this = this;
+            // const _this = this;
 
             this.target.style.overflow = this.settings.display.overflow ? "auto" : "hidden";
             this.container.style.zoom = this.settings.display.zoom;
@@ -55,7 +55,7 @@ module powerbi.extensibility.visual {
                 let cv_arc = getvalue(value_arc, i);
                 let cv_text = getvalue(value_text, i);
 
-                if (cv_text) {
+                if (cv_text || cv_text === 0) {
                     cv_text = `${Math.round(+cv_text * multiplicateur)}%`
                 }
 
@@ -147,9 +147,8 @@ module powerbi.extensibility.visual {
                     item["category_item"] = category_item;
 
                     category_item.onclick = function (ev) {
-                        if(item.url){
+                        if (item.url) {
                             window.location.href = item.url;
-                            console.log(item.url);
                         }
                         // _this.selectionManager.select(item.identity, true)
                         //     .then(function (ids: any[]) {
@@ -190,28 +189,46 @@ module powerbi.extensibility.visual {
 
             const color1 = ["#003A84", "#00B0E8"];
             const color2 = ["#30629D", "#3DC0ED"];
+            const colorNAN = ["#003A84", "#003A84"];
+
             gcontainer.attr("transform", `translate(${radius}, ${radius})`);
-
-
             const pie = d3.pie().sort(null).value(d => <any>d);
             var arc1 = d3.arc().outerRadius(radius).innerRadius(radius - arc_width);
             var arc2 = d3.arc().outerRadius(radius - arc_width + 1).innerRadius(radius - arc_width * 2);
 
-            gcontainer.append("g")
-                .selectAll("path")
-                .data(pie([arc_value, 100 - arc_value]))
-                .enter()
-                .append("path")
-                .style("fill", d => color1[d.index])
-                .attr("d", <any>arc1);
+            if (arc_value == null) {
+                gcontainer.append("g")
+                    .selectAll("path")
+                    .data(pie([0, 100]))
+                    .enter()
+                    .append("path")
+                    .style("fill", d => colorNAN[d.index])
+                    .attr("d", <any>arc1);
 
-            gcontainer.append("g")
-                .selectAll("path")
-                .data(pie([arc_value, 100 - arc_value]))
-                .enter()
-                .append("path")
-                .style("fill", d => color2[d.index])
-                .attr("d", <any>arc2);
+                gcontainer.append("g")
+                    .selectAll("path")
+                    .data(pie([0, 100]))
+                    .enter()
+                    .append("path")
+                    .style("fill", d => colorNAN[d.index])
+                    .attr("d", <any>arc2);
+            } else {
+                gcontainer.append("g")
+                    .selectAll("path")
+                    .data(pie([arc_value, 100 - arc_value]))
+                    .enter()
+                    .append("path")
+                    .style("fill", d => color1[d.index])
+                    .attr("d", <any>arc1);
+
+                gcontainer.append("g")
+                    .selectAll("path")
+                    .data(pie([arc_value, 100 - arc_value]))
+                    .enter()
+                    .append("path")
+                    .style("fill", d => color2[d.index])
+                    .attr("d", <any>arc2);
+            }
 
             let vor_color = "#000";
 
