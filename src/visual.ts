@@ -148,6 +148,7 @@ module powerbi.extensibility.visual {
 
                     category_item.onclick = function (ev) {
                         if(item.url){
+                            window.location.href = item.url;
                             console.log(item.url);
                         }
                         // _this.selectionManager.select(item.identity, true)
