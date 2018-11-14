@@ -4,16 +4,16 @@ module powerbi.extensibility.visual {
         private settings: VisualSettings;
         private container: HTMLElement;
         private target: HTMLElement;
-        private host: IVisualHost;
-        private selectionManager: ISelectionManager;
+        // private host: IVisualHost;
+        // private selectionManager: ISelectionManager;
 
         constructor(options: VisualConstructorOptions) {
-            this.host = options.host;
+            // this.host = options.host;
             this.target = options.element;
             this.container = document.createElement("div");
             this.container.className = "container";
             this.target.appendChild(this.container);
-            this.selectionManager = this.host.createSelectionManager();
+            // this.selectionManager = this.host.createSelectionManager();
         }
 
         public update(options: VisualUpdateOptions) {
@@ -35,6 +35,7 @@ module powerbi.extensibility.visual {
             let point_value = Visual.getvalues(categorical, "point_value");
             let point_total = Visual.getvalues(categorical, "point_total");
             let category_sort = Visual.getvalues(categorical, "category_sort");
+            let url = Visual.getvalues(categorical, "url");
             const data = [];
             const _this = this;
 
@@ -71,9 +72,10 @@ module powerbi.extensibility.visual {
                     vor_flag: getvalue(vor_flag, i),
                     point_value: getvalue(point_value, i),
                     point_total: getvalue(point_total, i),
-                    identity: this.host.createSelectionIdBuilder()
-                        .withCategory(subcategory, i)
-                        .createSelectionId(),
+                    url: getvalue(url, i),
+                    // identity: this.host.createSelectionIdBuilder()
+                    //     .withCategory(subcategory, i)
+                    //     .createSelectionId(),
                 });
             }
 
@@ -88,33 +90,33 @@ module powerbi.extensibility.visual {
 
             var categories = groupBy(data, "category");
 
-            const selectclass = (el: HTMLElement, name: string, remove = false) => {
-                if (el) {
-                    if (remove && el.classList.contains("category_item_selected")) {
-                        el.classList.remove("category_item_selected");
-                    }
-                    if (!remove && !el.classList.contains("category_item_selected")) {
-                        el.classList.add("category_item_selected");
-                    }
-                }
-            }
+            // const selectclass = (el: HTMLElement, name: string, remove = false) => {
+            //     if (el) {
+            //         if (remove && el.classList.contains("category_item_selected")) {
+            //             el.classList.remove("category_item_selected");
+            //         }
+            //         if (!remove && !el.classList.contains("category_item_selected")) {
+            //             el.classList.add("category_item_selected");
+            //         }
+            //     }
+            // }
 
-            const selectItems = (ids: any[]) => {
-                for (let i = 0, len = Object.keys(categories).length; i < len; i++) {
-                    const cat = Object.keys(categories)[i];
-                    const len2 = categories[cat].length;
+            // const selectItems = (ids: any[]) => {
+            //     for (let i = 0, len = Object.keys(categories).length; i < len; i++) {
+            //         const cat = Object.keys(categories)[i];
+            //         const len2 = categories[cat].length;
 
-                    for (let j = 0; j < len2; j++) {
-                        const item = categories[cat][j];
+            //         for (let j = 0; j < len2; j++) {
+            //             const item = categories[cat][j];
 
-                        if (ids.indexOf(item.identity) >= 0) {
-                            selectclass(item.category_item, "category_item_selected");
-                        } else {
-                            selectclass(item.category_item, "category_item_selected", true);
-                        }
-                    }
-                }
-            };
+            //             if (ids.indexOf(item.identity) >= 0) {
+            //                 selectclass(item.category_item, "category_item_selected");
+            //             } else {
+            //                 selectclass(item.category_item, "category_item_selected", true);
+            //             }
+            //         }
+            //     }
+            // };
 
             this.container.innerHTML = "";
 
@@ -145,10 +147,13 @@ module powerbi.extensibility.visual {
                     item["category_item"] = category_item;
 
                     category_item.onclick = function (ev) {
-                        _this.selectionManager.select(item.identity, true)
-                            .then(function (ids: any[]) {
-                                selectItems(ids);
-                            });
+                        if(item.url){
+                            console.log(item.url);
+                        }
+                        // _this.selectionManager.select(item.identity, true)
+                        //     .then(function (ids: any[]) {
+                        //         selectItems(ids);
+                        //     });
                     }
 
                     category_item.className = "category_item " + (j % 2 === 0 ? "category_item_even" : "category_item_odd");

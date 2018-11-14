@@ -31,6 +31,11 @@
             "kind": "Measure"
         },
         {
+            "displayName": "url",
+            "name": "url",
+            "kind": "Measure"
+        },
+        {
             "displayName": "Catégory",
             "name": "category",
             "kind": "Grouping",
@@ -62,6 +67,9 @@
                         "max": 1
                     },
                     "category_sort": {
+                        "max": 1
+                    },
+                    "url": {
                         "max": 1
                     },
                     "category": {
@@ -100,6 +108,11 @@
                         {
                             "bind": {
                                 "to": "category_sort"
+                            }
+                        },
+                        {
+                            "bind": {
+                                "to": "url"
                             }
                         }
                     ]
