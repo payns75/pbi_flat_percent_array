@@ -147,6 +147,7 @@ module powerbi.extensibility.visual {
                     item["category_item"] = category_item;
 
                     category_item.onclick = function (ev) {
+                        alert('plop');
                         if (item.url) {
                             window.location.href = item.url;
                         }
