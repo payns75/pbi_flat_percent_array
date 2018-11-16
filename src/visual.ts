@@ -28,6 +28,7 @@ module powerbi.extensibility.visual {
             let categorical = options.dataViews[0].categorical;
             let category = categorical.categories[0];
             let subcategory = categorical.categories[1];
+            let urls = categorical.categories[3];
             const multiplicateur = this.settings.display.percent ? 100 : 1;
             let value_text = Visual.getvalues(categorical, "value_text");
             let value_arc = Visual.getvalues(categorical, "value_arc");
@@ -35,7 +36,6 @@ module powerbi.extensibility.visual {
             let point_value = Visual.getvalues(categorical, "point_value");
             let point_total = Visual.getvalues(categorical, "point_total");
             let category_sort = Visual.getvalues(categorical, "category_sort");
-            let url = Visual.getvalues(categorical, "url");
             const data = [];
             // const _this = this;
 
@@ -66,13 +66,13 @@ module powerbi.extensibility.visual {
                 data.push({
                     category: category.values[i],
                     subcategory: subcategory.values[i],
+                    url: urls.values[i],
                     category_sort: getvalue(category_sort, i),
                     value_text: cv_text,
                     value_arc: cv_arc,
                     vor_flag: getvalue(vor_flag, i),
                     point_value: getvalue(point_value, i),
-                    point_total: getvalue(point_total, i),
-                    url: getvalue(url, i),
+                    point_total: getvalue(point_total, i)
                     // identity: this.host.createSelectionIdBuilder()
                     //     .withCategory(subcategory, i)
                     //     .createSelectionId(),
@@ -147,7 +147,6 @@ module powerbi.extensibility.visual {
                     item["category_item"] = category_item;
 
                     category_item.onclick = function (ev) {
-                        alert('plop');
                         if (item.url) {
                             window.location.href = item.url;
                         }
