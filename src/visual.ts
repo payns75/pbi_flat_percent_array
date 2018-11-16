@@ -28,7 +28,7 @@ module powerbi.extensibility.visual {
             let categorical = options.dataViews[0].categorical;
             let category = categorical.categories[0];
             let subcategory = categorical.categories[1];
-            let urls = categorical.categories[3];
+            let urls = categorical.categories[2];
             const multiplicateur = this.settings.display.percent ? 100 : 1;
             let value_text = Visual.getvalues(categorical, "value_text");
             let value_arc = Visual.getvalues(categorical, "value_arc");
