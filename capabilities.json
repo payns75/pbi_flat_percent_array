@@ -65,7 +65,6 @@
                         "max": 1
                     },
                     "category": {
-                        "min": 3,
                         "max": 3
                     }
                 }
