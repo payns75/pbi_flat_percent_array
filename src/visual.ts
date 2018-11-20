@@ -8,12 +8,17 @@ module powerbi.extensibility.visual {
         // private selectionManager: ISelectionManager;
 
         constructor(options: VisualConstructorOptions) {
-            // this.host = options.host;
-            this.target = options.element;
-            this.container = document.createElement("div");
-            this.container.className = "container";
-            this.target.appendChild(this.container);
-            // this.selectionManager = this.host.createSelectionManager();
+            try {
+                // this.host = options.host;
+                this.target = options.element;
+                this.container = document.createElement("div");
+                this.container.className = "container";
+                this.target.appendChild(this.container);
+                // this.selectionManager = this.host.createSelectionManager();
+            }
+            catch (ex) {
+                console.error('Constructor Error', ex);
+            }
         }
 
         public update(options: VisualUpdateOptions) {
@@ -185,7 +190,7 @@ module powerbi.extensibility.visual {
                 }
             }
             catch (ex) {
-                console.error('Erreur de controle', ex);
+                console.error('Update Error', ex);
             }
         }
 
